@@ -4,7 +4,6 @@ import os
 class BaseRepo:
     def __init__(self, file_path: str):
         self.file_path = os.path.join(BASE_DIR, 'entity',file_path+'.json')
-
     def _read_file(self):
         try:
             with open(self.file_path, 'r') as file:

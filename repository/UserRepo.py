@@ -1,5 +1,7 @@
-from BaseRepo import BaseRepo
+from .BaseRepo import BaseRepo
 class UserRepo(BaseRepo):
+    def __init__(self):
+        super().__init__('User')
     def add_user(self, user_id: int, username: str, email: str, role: str = "user"):
         user = {
             'user_id': user_id,
