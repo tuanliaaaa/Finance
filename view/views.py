@@ -29,3 +29,6 @@ class Login(APIView):
         jwtUser={"access":jwtData}
         return Response(jwtUser,201)
         
+class L(View):
+    def get(self,request):
+        return render(request,'ok.html')
