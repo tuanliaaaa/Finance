@@ -18,6 +18,7 @@ class Login(APIView):
             return Response({"message":"Vui lòng nhập password"},400)
         try:
             users = UserRepo().find_by_key("username",userRequestToken['username'])
+            return Response(users,200)
             print('d')
             if(len(users)>0):
                 if(users[0]['password']!=userRequestToken['password']): return Response({"message":"mật khẩu sai rồi thằng ngu"},400)
