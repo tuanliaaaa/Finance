@@ -19,10 +19,10 @@ class Login(APIView):
         if(len(users)==0):
            return Response({"message":"mật khẩu sai rồi thằng ngu"},400)
         user=users[0]
-        payLoad = {'UserID':user['id'],"UserName":user['username'],"Role":user["role"],"exp":exp}
+        payLoad = {'UserID':user.id,"UserName":user.username,"Role":user.role,"exp":exp}
         jwtData = jwt.encode(payLoad,SECRET_KEY,) 
         jwtUser={"access":jwtData}
-        return Response(CustomResponse(200,"succes",jwtUser),201)
+        return Response(CustomResponse(200,"succes",jwtUser).to_dict(),201)
         
 class L(View):
     def get(self,request):
