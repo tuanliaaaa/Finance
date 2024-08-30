@@ -28,8 +28,8 @@ function login()
         }
     }         
     const userInfo={
-        Username:document.getElementById("username").value,
-        Password:document.getElementById("password").value
+        username:document.getElementById("Username").value,
+        password:document.getElementById("Password").value
     }
     postData=JSON.stringify(userInfo)
     xhttp.open("POST", "/api/v1/login",false);
