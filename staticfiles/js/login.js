@@ -16,9 +16,10 @@ function login()
     {
         var tokenResponseJson=xhttp.responseText
         var tokenResponse= JSON.parse(tokenResponseJson)
-        if(xhttp.status==200)
+        if(xhttp.status==201)
         {
             localStorage.setItem("Token", tokenResponse['access']);
+            window.location='/ahihi';
             
         }
         else
