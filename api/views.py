@@ -11,7 +11,7 @@ from django.utils.decorators import method_decorator
 import datetime
 class Login(APIView):
     def post(self,request):
-        exp=datetime.now(tz=timezone.utc) + timedelta(minutes=50)
+        exp=datetime.datetime.now(tz=timezone.utc) + timedelta(minutes=50)
         userRequestToken =request.data     
         if 'username' not in userRequestToken or not userRequestToken['username']:
             return Response({"message":"Vui lòng nhập username"},400)
