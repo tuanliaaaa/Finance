@@ -11,6 +11,6 @@ class CustomResponse:
         return {
             "status": self.status,
             "message": self.message,
-            "time": self.time,
-            "data": self.data
+            "data": self.data,
+            "time": self.time
         }
