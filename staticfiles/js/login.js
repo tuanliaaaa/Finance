@@ -35,6 +35,5 @@ function login()
     postData=JSON.stringify(userInfo)
     xhttp.open("POST", "/api/v1/login",false);
     xhttp.setRequestHeader("Content-type","application/json")
-    xhttp.setRequestHeader("X-CSRFToken", csrfToken);
     xhttp.send(postData)
 }
