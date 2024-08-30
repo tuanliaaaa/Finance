@@ -23,7 +23,7 @@ class Login(APIView):
             if(len(users)>0):
                 if(users[0]['password']!=userRequestToken['password']): return Response({"message":"mật khẩu sai rồi thằng ngu"},400)
         except Exception:      
-            return Response(Exception,403)
+             return Response({"error": str(Exception)}, 403)
         user=users[0]
         payLoad = {'UserID':user['id'],"UserName":user['username'],"Role":user["role"],"exp":exp}
         jwtData = jwt.encode(payLoad,SECRET_KEY,) 
