@@ -10,7 +10,7 @@ class BaseRepo:
                 data = json.load(file)
             return data
         except (FileNotFoundError, json.JSONDecodeError):
-            return []
+            return self.file_path
 
     def _write_file(self, data):
         with open(self.file_path, 'w') as file:
