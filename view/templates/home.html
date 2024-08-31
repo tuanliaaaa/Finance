@@ -233,7 +233,7 @@ th, td {
         subDataTable.innerHTML='';
         subDataList.forEach(subData => {
             var rowsub = document.createElement('tr');           
-            rowsub.innerHTML = `<td>${subData.id}</td><td>${subData.endAt?add.endAt:"Vô thời hạn"}</td><td>${subData.humanName}</td><td>${subData.price}</td>`;
+            rowsub.innerHTML = `<td>${subData.id}</td><td>${subData.endAt?subData.endAt:"Vô thời hạn"}</td><td>${subData.humanName}</td><td>${subData.price}</td>`;
             subDataTable.appendChild(rowsub);
             sumSub+=subData.price;
             sum-=subData.price;
