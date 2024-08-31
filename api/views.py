@@ -38,7 +38,7 @@ class Humen(APIView):
 class Finances(APIView):
     @method_decorator(RoleRequest(allowed_roles=['user',]))
     def get(self,request):
-        finances = Finance.objects.select_related('humanName').filter(user_id=request.UserID)
+        finances = Finance.objects.select_related('humanName').filter(user_id=request.UserID,status=request.GET.get('status'))
         
         # Tạo danh sách các đối tượng với thông tin Finance và Human
         financesJson = [

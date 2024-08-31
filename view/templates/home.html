@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Display</title>
+    <style>
+        /* Định dạng chung cho trang web */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+h1 {
+    text-align: center;
+    color: #007BFF;
+}
+
+/* Định dạng cho form input */
+.form-group {
+    margin-bottom: 10px;
+}
+
+label {
+    font-weight: bold;
+}
+
+input[type="date"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+/* Định dạng cho tab và bảng dữ liệu */
+.tabs {
+    display: flex;
+    margin-top: 20px;
+}
+
+.tab-link {
+    flex: 1;
+    padding: 10px;
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px 5px 0 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.tab-link.active {
+    background-color: #0056b3;
+}
+
+.tab-content {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0 0 5px 5px;
+    padding: 20px;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.data-table, th, td {
+    border: 1px solid #ddd;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+
+/* Định dạng cho tab active */
+.nav-link.active {
+    background-color: #007BFF;
+    color: #fff;
+}
+.tab-pane {
+    display: none;
+}
+.tab-pane.active{
+    display: block;
+}
+.sum{
+    margin-top: 20px;
+}
+.sum1.hid{
+    display: none;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Data Display</h1>
+        <div class="tabs">
+            <button class="tab-link active" data-target="subTab">Sub</button>
+            <button class="tab-link" data-target="addTab">Add</button>
+        </div>
+        <div class="tab-content">
+            <div id="subTab" class="tab-pane active">
+                <table class="data-table" id="subTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Created At</th>
+                           
+                            <th>Amount</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="subData">
+                        <!-- Sub data table will be displayed here -->
+                    </tbody>
+                </table>
+            </div>
+            <div id="addTab" class="tab-pane ">
+                <table class="data-table" id="addTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Created At</th>
+                           
+                            <th>Amount</th>
+                            <th>Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="addData">
+                        <!-- Add data table will be displayed here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="sum1">
+             <div id="sumSub"></div>
+        </div>
+        <div class="sum1 hid">
+            <div id="sumAdd"></div>
+       </div>
+        <div class="sum">
+            <div id="total"></div>
+       </div>
+    </div>
+    <script >
+    if(localStorage.getItem("Token")){
+            document.addEventListener('DOMContentLoaded',async function () {
+            var sumSub=0;
+            var sumAdd=0;
+            
+            changeHtmlFetchData();
+
+            var tabNav = document.querySelectorAll(".tab-link");
+            tabNav.forEach((event)=>{
+                event.addEventListener('click',(e)=>
+                {
+                    var tabNavNew = document.querySelectorAll(".tab-link");
+                    tabNavNew.forEach((evt)=>{
+                        evt.classList.remove('active');
+                    });
+                    e.target.classList.add("active");
+                    var tab=e.target.getAttribute('data-target')
+                    var s = tab.substring(0, 3);
+                    var subaddElement=document.querySelectorAll(".sum1");
+                    if(s=='add'){
+                        subaddElement[0].classList.add('hid');
+                        subaddElement[1].classList.remove('hid');
+                    }else{
+                        subaddElement[1].classList.add('hid');
+                        subaddElement[0].classList.remove('hid');
+                    }
+                    var tabtable = document.getElementById(tab);
+                    var tabPane = document.querySelectorAll(".tab-pane");
+                    tabPane.forEach((tabpane)=>{
+                        tabpane.classList.remove("active");
+                    });
+                    tabtable.classList.add("active");
+                });
+            });
+        });
+    }else{
+        window.location='/login';
+    }
+    function fetchData(type) {
+        return new Promise(function(resolve, reject) {
+       
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", '/api/v1/finances?status='+type, true);
+        xhr.setRequestHeader('Authorization', 'Bearer ' + localStorage.getItem('Token'));
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            console.log(JSON.parse(xhr.responseText))
+            resolve(JSON.parse(xhr.responseText).data);
+          } else if (xhr.status === 404) {
+            console.log("Yêu cầu không thành công. Mã lỗi:", xhr.status);
+            resolve([]);
+          } else {
+            resolve([]);
+          }
+        };
+
+        xhr.onerror = function() {
+          console.log("Đã xảy ra lỗi trong quá trình yêu cầu.");
+          reject([]);
+        };
+
+        xhr.send();
+      });
+    }
+    async function changeHtmlFetchData(){
+         // Gọi fetchData ban đầu khi trang tải lên
+        let subDataList= await fetchData("Chưa trả");
+        let addDataList= await fetchData("Chưa đòi");
+        var sum = 0;
+        var sumSub=0;
+        var sumAdd=0;
+        var subDataTable =document.getElementById("subData");
+        subDataTable.innerHTML='';
+        subDataList.forEach(subData => {
+            var rowsub = document.createElement('tr');           
+            rowsub.innerHTML = `<td>${subData.id}</td><td>${subData.endAt?add.endAt:"Vô thời hạn"}</td><td>${subData.humanName}</td><td>${subData.price}</td>`;
+            subDataTable.appendChild(rowsub);
+            sumSub+=subData.price;
+            sum-=subData.price;
+            
+        });
+        document.getElementById('sumSub').innerHTML=sumSub;
+        var addDataTable = document.getElementById("addData");
+        addDataTable.innerHTML='';
+        addDataList.forEach(addData=>{
+            var rowadd = document.createElement('tr');
+            rowadd.innerHTML = `<td>${addData.id}</td><td>${addData.endAt?add.endAt:"Vô thời hạn"}</td><td>${addData.humanName}</td><td>${addData.price}</td>`;
+            addDataTable.appendChild(rowadd);
+            sumAdd+=addData.price;
+            sum+=addData.price;
+           
+        });
+        document.getElementById('sumAdd').innerHTML=sumAdd;
+        document.getElementById("total").innerHTML="Sum: "+sum;
+    }
+    
+</script>
+</body>
+</html>
