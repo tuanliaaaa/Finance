@@ -37,7 +37,7 @@ function login()
         {
             console.log(tokenResponse);
             localStorage.setItem("Token", tokenResponse.data.access);
-            window.location='/ahihi';
+            window.location='/home';
             
         }
         else
