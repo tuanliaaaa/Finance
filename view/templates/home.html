@@ -244,7 +244,7 @@ th, td {
         addDataTable.innerHTML='';
         addDataList.forEach(addData=>{
             var rowadd = document.createElement('tr');
-            rowadd.innerHTML = `<td>${addData.id}</td><td>${addData.endAt?add.endAt:"Vô thời hạn"}</td><td>${addData.humanName}</td><td>${addData.price}</td>`;
+            rowadd.innerHTML = `<td>${addData.id}</td><td>${addData.endAt?addData.endAt:"Vô thời hạn"}</td><td>${addData.humanName}</td><td>${addData.price}</td>`;
             addDataTable.appendChild(rowadd);
             sumAdd+=addData.price;
             sum+=addData.price;
