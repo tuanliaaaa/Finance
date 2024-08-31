@@ -208,6 +208,8 @@ th, td {
             console.log("Yêu cầu không thành công. Mã lỗi:", xhr.status);
             resolve([]);
           } else {
+            window.localStorage.removeItem("Token");
+            window.location="/login";
             resolve([]);
           }
         };
