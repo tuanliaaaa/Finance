@@ -208,7 +208,6 @@ th, td {
             console.log("Yêu cầu không thành công. Mã lỗi:", xhr.status);
             resolve([]);
           } else {
-            console.log("dđ")
             window.localStorage.removeItem("Token");
             window.location="/login";
             resolve([]);

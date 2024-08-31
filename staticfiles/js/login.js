@@ -18,12 +18,14 @@ function login()
         var tokenResponse= JSON.parse(tokenResponseJson)
         if(xhttp.status==201)
         {
+            console.log(tokenResponse);
             localStorage.setItem("Token", tokenResponse.data.access);
             window.location='/ahihi';
             
         }
         else
         {
+            console.log(tokenResponse);
             document.getElementById("error").innerText=tokenResponse.data['message']
             document.getElementById("form__content__text__error").style="display:block"
         }
