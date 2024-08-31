@@ -56,6 +56,6 @@ function login()
 
     xhttp.open("POST", "/api/v1/login",false);
     xhttp.setRequestHeader("Content-type","application/json");
-    xhr.setRequestHeader('X-CSRFToken', csrftoken);
+    xhttp.setRequestHeader('X-CSRFToken', csrftoken);
     xhttp.send(postData)
 }
